@@ -1,0 +1,59 @@
+#Python Bytecode Files
+_pycache_/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+
+#Virtual Environments
+venv/
+env/
+.venv/
+ENV/
+
+#Output & Build Files
+*.log
+*.csv
+*.json
+*.pdf
+*.db
+*.out
+*.tmp
+
+#IDE and Editor Configs
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+#System Files
+.DS_Store
+Thumbs.db
+
+#Packaging
+build/
+dist/
+*.egg-info/
+*.egg
+.eggs/
+
+#Streamlit
+.streamlit/
+
+#Jupyter Notebooks (if any used for prototyping)
+.ipynb_checkpoints/
+
+#Coverage, Lint, Test Reports
+htmlcov/
+coverage.xml
+*.cover
+.tox/
+.nox/
+.cache/
+pytest_cache/
+
+#MacOS / Windows / Linux Trash
+*.swp
+*.bak
+*.tmp
+.~
