@@ -1,4 +1,5 @@
 import re
+import fitz  # PyMuPDF
 
 def clean_links(raw_links):
     cleaned = []
@@ -25,11 +26,11 @@ def extract_basic_info(text, extra_links=None):
 
     match = re.search(r"[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+", text)
     email = match.group() if match else "N/A"
-    match = re.search(r'(\+?\d[\d\-\s\(\)]{9,})', text)
+
+    match = match = re.search(r'(\+?\d{1,3}[-.\s]?)?(\(?\d{3,5}\)?[-.\s]?)?\d{6,10}', text)
     phone = match.group().strip() if match else "N/A"
 
     visible_links = re.findall(r"https?://[^\s\n\r\)\]]+", text)
-
     bare_links = re.findall(r"\b(?:www\.)?(?:[a-zA-Z0-9-]+\.)+[a-z]{2,6}/[^\s\n\r]+", text)
     for link in bare_links:
         if not link.startswith("http"):
@@ -43,14 +44,14 @@ def extract_basic_info(text, extra_links=None):
         "instagram.com", "medium.com", "youtube.com", "about.me",
         "behance.net", "dribbble.com", "naukri.com", "shine.com",
         "timesjobs.com", "internshala.com", "apna.co", "hirect.in",
-        "angel.co", "quora.com", "stackoverflow.com"
+        "angel.co", "quora.com", "stackoverflow.com", "telegram.me",
+        "telegram.org", "snapchat.com"
     ]
 
     social_links = {}
     for link in all_links:
         domain_match = re.findall(r"https?://(?:www\.)?([^/]+)", link)
         domain = domain_match[0].lower() if domain_match else ""
-
         for site in known_social_sites:
             if site in domain:
                 platform = site.split(".")[0]
