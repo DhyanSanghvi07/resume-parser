@@ -1,7 +1,7 @@
 import pdfplumber
 import docx2txt
 import pytesseract
-pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
+pytesseract.pytesseract.tesseract_cmd = r"./Tesseract-OCR/tesseract.exe"
 from pdf2image import convert_from_path
 from PIL import Image
 import os
@@ -61,8 +61,7 @@ def extract_text_from_pdf(file_path):
                     text += page_text + '\n'
 
         if not text.strip():
-            print("No text found in PDF. Trying OCR...")
-            images = convert_from_path(file_path, poppler_path=r"C:\poppler\poppler-24.08.0\Library\bin")
+            images = convert_from_path(file_path, poppler_path=r"./poppler/poppler-24.08.0/Library/bin")
             for image in images:
                 ocr_text = pytesseract.image_to_string(image)
                 text += ocr_text + '\n'
@@ -77,7 +76,6 @@ def extract_text_from_docx(file_path):
         text = docx2txt.process(file_path).strip()
 
         if not text:
-            # print("No text found in DOCX. Trying OCR on images...")
             with zipfile.ZipFile(file_path, 'r') as docx_zip:
                 for file_name in docx_zip.namelist():
                     if file_name.startswith('word/media/') and file_name.lower().endswith(('.png', '.jpg', '.jpeg')):
@@ -89,3 +87,16 @@ def extract_text_from_docx(file_path):
     except Exception as e:
         print(f"Error processing DOCX: {e}")
     return text
+
+def extractText(path):
+    if path.lower().endswith('.pdf'):
+        raw_text = extract_text_from_pdf(path)
+    elif path.lower().endswith('.docx'):
+        raw_text = extract_text_from_docx(path)
+    else:
+        print("Unsupported file type. Please provide a PDF or DOCX file.")
+        raw_text = ''
+    
+    if raw_text:
+        cleaned_text = clean_text(raw_text)
+        print(cleaned_text)
