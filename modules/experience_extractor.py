@@ -1,108 +1,86 @@
 import re
-import spacy
-import os
-import yaml
-import json
 from typing import List, Dict
-from langchain_groq import ChatGroq
-from langchain_core.prompts import ChatPromptTemplate
+import spacy
 
-# Load NLP model
 nlp = spacy.load("en_core_web_sm")
 
-# Load API key
-with open("config.yaml") as f:
-    api_key = yaml.safe_load(f)["GROQ_API_KEY"]
+SECTION_HEADERS = re.compile(r'^(EXPERIENCE|WORK EXPERIENCE|PROFESSIONAL EXPERIENCE|EMPLOYMENT)\b', re.I)
 
-# Init LLM
-llm = ChatGroq(api_key=api_key, model="llama3-70b-8192")
 
-# === Fallback method ===
-def extract_experience_fallback(text: str) -> List[Dict]:
-    experiences = []
-    lines = text.split("\n")
-    buffer = ""
+def _section_text(text: str, header_names=None) -> str:
+    """Extract experience section using header anchors. Return section or full text fallback."""
+    header_names = header_names or ["experience", "work experience", "professional experience", "employment"]
+    lines = text.splitlines()
+    start_idx = None
+    end_idx = None
+    for i, ln in enumerate(lines):
+        if any(ln.strip().lower().startswith(h) for h in header_names):
+            start_idx = i + 1
+            break
+    if start_idx is None:
+        return text  # fallback to whole text
+    # find next major header to stop
+    for j in range(start_idx, len(lines)):
+        if re.match(r'^[A-Z][A-Z\s]{2,}$', lines[j].strip()):
+            end_idx = j
+            break
+    if end_idx is None:
+        end_idx = len(lines)
+    return "\n".join(lines[start_idx:end_idx]).strip()
 
-    for line in lines:
-        line = line.strip()
-        if not line:
+
+def _merge_bullets(section_text: str) -> List[str]:
+    bullets = []
+    current = ""
+    for line in section_text.splitlines():
+        ln = line.strip()
+        if not ln:
             continue
+        if ln.startswith(("•", "-", "*")) or re.match(r'^\d+\.', ln):
+            if current:
+                bullets.append(current.strip())
+            current = re.sub(r'^[•\-\*\d\.\)\s]+', '', ln)
+        else:
+            # continuation
+            current = (current + " " + ln).strip()
+    if current:
+        bullets.append(current.strip())
+    return bullets
 
-        buffer += " " + line
-        doc = nlp(buffer)
-        orgs = [ent.text for ent in doc.ents if ent.label_ == "ORG"]
-        dates = [ent.text for ent in doc.ents if ent.label_ == "DATE"]
 
-        if orgs and dates:
-            experiences.append({
-                "company": ", ".join(set(orgs)),
-                "role": "Not Found",
-                "duration": ", ".join(set(dates)),
-                "responsibilities": buffer.strip()
-            })
-            buffer = ""
-
-    return experiences
-
-# === LLM method ===
-def extract_experience_with_llm(text: str) -> List[Dict] | None:
-    try:
-        prompt = ChatPromptTemplate.from_template("""
-        You are an intelligent resume parser. From the text below:
-        '''
-        {text}
-        '''
-        Extract only the work experience section in this exact JSON format:
-
-        [
-        {{
-            "company": "Company Name",
-            "role": "Job Title",
-            "duration": "Start - End",
-            "responsibilities": [
-            "Short responsibility 1",
-            "Short responsibility 2",
-            "Short responsibility 3"
-            ]
-        }}
-        ]
-        ✱ Guidelines:
-        - Summarize long texts into 2–4 short, clear points
-        - Do not copy full paragraphs
-        - If responsibilities are unclear, infer common duties for that role
-        - Output must be only valid JSON, no extra text
-        """)
-
-        chain = prompt | llm
-        response = chain.invoke({"text": text})
-
-        if response.content.strip().startswith('['):
-            return json.loads(response.content.strip())
-        return None
-
-    except Exception as e:
-        print("LLM error:", e)
-        return None
-
-# === Unified interface ===
 def extract_experience(text: str) -> List[Dict]:
-    llm_result = extract_experience_with_llm(text)
+    """
+    Returns list of experiences:
+    [{'company':..., 'role':..., 'duration':..., 'responsibilities':[...]}]
+    """
+    section = _section_text(text)
+    bullets = _merge_bullets(section)
+    results = []
+    for b in bullets:
+        # try to extract duration (years) via regex
+        duration_match = re.search(r'((Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[^\n,]*)|(\b(19|20)\d{2}\b(?:\s*[-–]\s*(19|20)\d{2})?)', b, re.I)
+        duration = duration_match.group(0) if duration_match else "Not Found"
 
-    if isinstance(llm_result, list) and len(llm_result) > 0:
-        return llm_result
-    elif isinstance(llm_result, list) and len(llm_result) == 0:
-        return [{
-            "company": "Not Found",
-            "role": "Not Found",
-            "duration": "Not Found",
-            "responsibilities": []
-        }]
-    elif any(word in text.lower() for word in ["experience", "intern", "worked", "employed", "job", "role"]):
-        return extract_experience_fallback(text)
-    else:
-        return [{
-            "company": "Not Found",
-            "role": "Not Found",
-            "duration": "Not Found",
-            "responsibilities": []
-        }]
+        # use spaCy to find ORG and PERSON hints
+        doc = nlp(b)
+        orgs = [ent.text for ent in doc.ents if ent.label_ == "ORG"]
+        roles = []
+        # heuristics: uppercase words or "Teacher", "Engineer", etc.
+        role_match = re.search(r'\b(Teacher|Engineer|Developer|Manager|Analyst|Intern|Assistant|Lead)\b', b, re.I)
+        role = role_match.group(0) if role_match else "Not Found"
+        company = orgs[0] if orgs else "Not Found"
+
+        # responsibilities: split by bullets inside this bullet (.,; or '•')
+        responsibilities = re.split(r'\s*[\u2022\-\*]\s*', b)
+        responsibilities = [r.strip() for r in responsibilities if r.strip() and len(r.strip()) > 10][:6]  # cap
+
+        results.append({
+            "company": company,
+            "role": role,
+            "duration": duration,
+            "responsibilities": responsibilities
+        })
+    if not results:
+        # fallback: return minimal "Not Found"
+        return [{"company": "Not Found", "role": "Not Found", "duration": "Not Found", "responsibilities": []}]
+    return results
