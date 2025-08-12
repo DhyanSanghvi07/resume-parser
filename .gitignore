@@ -15,7 +15,6 @@ ENV/
 #Output & Build Files
 *.log
 *.csv
-*.json
 *.pdf
 *.db
 *.out
