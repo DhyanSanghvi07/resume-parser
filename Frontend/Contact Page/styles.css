@@ -1,0 +1,50 @@
+body {
+      background-color: #1e1e2f;
+      color: #fff;
+      animation: bodyFadeIn 1s ease-in-out both;
+    }
+
+    @keyframes bodyFadeIn {
+      0% {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .navbar, .btn-primary {
+      background-color: #7c3aed;
+      border-color: #7c3aed;
+    }
+
+    .form-control,
+    .form-control:focus {
+      background-color: #2c2c3c;
+      color: #fff;
+      border: 1px solid #444;
+    }
+
+    .form-label {
+      color: #ccc;
+    }
+
+    .footer {
+      background-color: #2c2c3c;
+      padding: 1rem 0;
+      text-align: center;
+      color: #aaa;
+    }
+
+    .nav-link {
+      margin-right: 15px;
+    }
+
+    .form-label i {
+      font-size: 1.2rem;
+    }
+    textarea {
+      resize: none; 
+    }

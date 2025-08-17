@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Parsed Resume</title>
+      <link rel="shortcut icon" href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR6IJ-frlB4jPrBOlWtIwZFr_wy0-cWZo38jZBWXbN3E9l1uQ8ow4EPb9QTd6uzls5r5t4&usqp=CAU" type="image/x-icon">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link href="../Home Page/style.css" rel="stylesheet">
+</head>
+<body>
+  <!-- Navbar -->
+    <nav class="navbar navbar-dark px-3 sticky-top" style="background-color: #6C63FF;">
+        <div class="container-fluid">
+            <a class="navbar-brand fw-bold text-white" href="#">
+                <i class="fa fa-file-alt me-2"></i> RESUME<span class="text-light">PARSER</span>
+            </a>
+
+            <!-- Desktop Menu -->
+            <div class="d-none d-lg-flex align-items-center">
+                <ul class="navbar-nav flex-row gap-3">
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="../Home Page/index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="../Output Page/index.html">Output</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="../Contact Page/index.html">Contact</a>
+                    </li>
+                </ul>
+                <button id="theme-toggle" class="btn btn-light ms-3"><i class="fa fa-moon"></i></button>
+            </div>
+
+             <!-- Mobile Menu -->
+            <div class="d-flex d-lg-none align-items-center">
+                <button id="theme-toggle" class="btn btn-light me-2"><i class="fas fa-moon"></i></button>
+                <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileMenu"
+                    aria-controls="mobileMenu" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Offcanvas for Mobile -->
+    <div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="mobileMenu">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title">Menu</h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"
+                aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body px-4">
+            <ul class="navbar-nav">
+                <li class="nav-item mb-2">
+                    <a class="nav-link text-white" href="../Home Page/index.html">Home</a>
+                </li>
+                <li class="nav-item mb-2">
+                    <a class="nav-link text-white" href="#">Output</a>
+                </li>
+                <li class="nav-item mb-2">
+                    <a class="nav-link text-white" href="../Contact Page/index.html">Contact</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+  
+  <!-- Main Content -->
+  <div class="container my-5">
+    <div id="output">
+      <!-- Resume data will be loaded here dynamically -->
+      <div class="text-center">
+        <div class="spinner-border text-primary" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+        <p class="mt-2">Loading parsed resume data...</p>
+      </div>
+    </div>
+  </div>
+  <!-- Footer -->
+  <footer class="text-center py-4 ">
+    <p class="mb-0">Made with <i class="fa fa-heart"></i> for Internship Project | Contact: info@resumeparser.com</p>
+  </footer>
+  <script src="script.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

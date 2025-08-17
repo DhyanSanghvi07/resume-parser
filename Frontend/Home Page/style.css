@@ -1,0 +1,173 @@
+
+/* === LAYOUT === */
+body {
+  font-family: 'Inter', sans-serif;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+/* === THEME: LIGHT MODE === */
+.light-mode {
+  background-color: #F9FAFB;
+  color: #1F2937;
+}
+.light-mode .upload-box {
+  background-color: #F3F4F6;
+  border: 2px dashed #4F46E5;
+}
+.light-mode .preview-box iframe {
+  background-color: white;
+  border: 1px solid #D1D5DB;
+}
+.light-mode .upload-label,
+.light-mode .caption {
+  color: #6B7280;
+}
+.light-mode .gif-placeholder {
+  background-color: #E5E7EB;
+  color: #6B7280;
+}
+
+/* === THEME: DARK MODE === */
+.dark-mode {
+  background-color: #1F2937;
+  color: #D1D5DB;
+}
+.dark-mode .upload-box {
+  background-color: #111827;
+  border: 2px dashed #60A5FA;
+}
+.dark-mode .preview-box iframe {
+  background-color: #1F2937;
+  border: 1px solid #374151;
+}
+.dark-mode .upload-label,
+.dark-mode .caption {
+  color: #D1D5DB;
+}
+.dark-mode .gif-placeholder {
+  background-color: #374151;
+  color: #D1D5DB !important;
+}
+/* === Hero section === */
+.hero-section {
+  position: relative;
+  background-image: url('https://t4.ftcdn.net/jpg/07/10/32/87/360_F_710328720_D4WNteqbb4elgqtIcAP14oX8BIA7guxU.jpg');/*https://miro.medium.com/v2/resize:fit:1400/0*FDH1NAuM_FPI5DFe, https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTFsEPssJzxAUlMUyR3UIT8k6atX3tzwBYROQ&s*/
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 10px;
+  padding: 40px;
+  height: 80vh;
+  overflow: hidden;
+}
+
+/* Overlay for opacity effect */
+.hero-section::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0); /* Adjust 0.4 for more/less darkness */
+  border-radius: 10px;
+  z-index: 1;
+}
+
+/* Keep content above overlay */
+.hero-section > * {
+  position: relative;
+  z-index: 2;
+}
+
+
+/* === GIF PREVIEW === */
+.gif-wrapper {
+  width: 100%;
+  max-width: 400px;
+  height: 250px;
+  overflow: hidden;
+  border-radius: 12px;
+  margin: 0 auto;
+}
+.cropped-gif {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+/* === UPLOAD & BUTTONS === */
+.upload-btn,
+.btn {
+  background: linear-gradient(to right, #4F46E5, #3B82F6);
+  color: white;
+  font-weight: 600;
+  border: none;
+}
+.upload-btn:hover,
+.btn:hover {
+  background: linear-gradient(to right, #4338CA, #2563EB);
+}
+
+.upload-box {
+  border: 2px dashed #3B82F6;
+  background-color: rgba(59, 130, 246, 0.1);
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+/* === PREVIEW BOX === */
+.preview-box {
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden;
+}
+.preview-box iframe {
+  width: 100%;
+  min-height: 600px;
+  max-height: 800px;
+  height: auto;
+  border-radius: 8px;
+}
+
+/* === RESPONSIVE === */
+@media (max-width: 768px) {
+  .preview-box iframe {
+    min-height: 300px;
+    max-height: 500px;
+  }
+}
+
+/* === FOOTER === */
+footer {
+  background-color: #E5E7EB;
+  color: #6B7280;
+}
+.dark-mode footer {
+  background-color: #1F2937;
+  color: #93C5FD;
+}
+
+/* === TYPOGRAPHY & MISC === */
+.caption {
+  transition: color 0.3s;
+  font-size: 0.95rem;
+  font-style: italic;
+  text-align: center;
+}
+.section-heading {
+  color: #655dfc !important;
+}
+.dark-mode .section-heading {
+  color: #60A5FA;
+}
+textarea {
+  resize: none; 
+}
+.black {
+  color: black;
+}
+.white {
+  color: white;
+}

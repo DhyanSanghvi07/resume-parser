@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Internship Resume Parser</title>
+    <link rel="shortcut icon" href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR6IJ-frlB4jPrBOlWtIwZFr_wy0-cWZo38jZBWXbN3E9l1uQ8ow4EPb9QTd6uzls5r5t4&usqp=CAU" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <link rel="stylesheet" href="/Home Page/style.css">
+</head>
+
+<body class="light-mode">
+    <!-- Navbar -->
+    <nav class="navbar navbar-dark px-3 sticky-top" style="background-color: #6C63FF;">
+        <div class="container-fluid">
+            <a class="navbar-brand fw-bold text-white" href="#">
+                <i class="fas fa-file-alt me-2"></i> RESUME<span class="text-light">PARSER</span>
+            </a>
+
+            <!-- Desktop Menu -->
+            <div class="d-none d-lg-flex align-items-center">
+                <ul class="navbar-nav flex-row gap-3">
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="#">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="../Output Page/index.html">Output</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="../Contact Page/index.html">Contact</a>
+                    </li>
+                </ul>
+                <button id="theme-toggle" class="btn btn-light ms-3"><i class="fa fa-moon"></i></button>
+            </div>
+
+            <!-- Mobile Menu -->
+            <div class="d-flex d-lg-none align-items-center">
+                <button id="theme-toggle" class="btn btn-light me-2"><i class="fas fa-moon"></i></button>
+                <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileMenu"
+                    aria-controls="mobileMenu" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Offcanvas for Mobile -->
+    <div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="mobileMenu">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title">Menu</h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"
+                aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body px-4">
+            <ul class="navbar-nav">
+                <li class="nav-item mb-2">
+                    <a class="nav-link text-white" href="#">Home</a>
+                </li>
+                <li class="nav-item mb-2">
+                    <a class="nav-link text-white" href="../Output Page/index.html">Output</a>
+                </li>
+                <li class="nav-item mb-2">
+                    <a class="nav-link text-white" href="../Contact Page/index.html">Contact</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    
+        <!-- Intro Section -->
+        <section class="mb-5 row align-items-center mb-5 hero-section">
+            <div class="px-5 col-md-6 animate__animated animate__fadeInLeft">
+                <h1 class="mb-3 section-heading">Welcome to ResumeParser</h1>
+                <p class="black">
+                    Upload your resume and instantly preview your details extracted smartly by our system.
+                    We support PDF and Word files and guarantee secure parsing with zero data leaks.
+                </p>
+            </div>
+            <div class="col-md-6 text-center animate__animated animate__fadeInRight">
+                <div class="gif-wrapper">
+                    <img src="/Home Page/resume.gif" class="cropped-gif"/>
+                </div>
+                <p class="white mt-2">Upload & Extract Seamlessly</p>
+            </div>
+        </section>
+    <main class="container my-5" style="max-width: 75%;">
+        <!-- Upload and Preview Section -->
+        <section class="upload-preview text-center my-5" id="output">
+            <div class="upload-box p-4  rounded w-100 mb-5">
+                <p class="upload-label">Drop your resume here or choose a file.<br><small>PDF and DOCX only.</small></p>
+                <input type="file" id="resume-file" accept=".pdf,.doc,.docx" class="d-none">
+                <button class="btn mt-3" onclick="document.getElementById('resume-file').click()">
+                    <i class="fas fa-upload"></i> Drag & Drop OR Upload
+                </button>
+                <button type="submit" class="btn mt-3" id="upload-btn">Parse Resume</button>
+            </div>
+            <div class="preview-box mt-4 w-100">
+                <iframe id="previewFrame" title="Resume Preview" src="https://msnlabs.com/img/resume-sample.pdf"></iframe>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer id="contact" class="text-center py-4">
+        <p class="mb-0">Made with <i class="fa fa-heart"></i> for Internship Project | Contact: info@resumeparser.com</p>
+    </footer>
+
+    <script src="/Home Page/script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

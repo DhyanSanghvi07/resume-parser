@@ -1,0 +1,108 @@
+body {
+  background: linear-gradient(135deg, #f8f9fa 60%, #e0e7ff 100%);
+  font-family: "Segoe UI", "Inter", sans-serif;
+
+}
+/* === LAYOUT === */
+body {
+  background: linear-gradient(135deg, #181824 60%, #23243a 100%);
+  font-family: "Segoe UI", "Inter", sans-serif;
+  min-height: 100vh;
+  transition: background 0.4s, color 0.3s;
+}
+
+/* === CARD === */
+.card {
+  background-color: #ffffff;
+  border-radius: 16px;
+  border: none;
+  box-shadow: 0 8px 32px rgba(44, 62, 80, 0.12);
+  transition: box-shadow 0.3s;
+}
+.card:hover {
+  box-shadow: 0 16px 48px rgba(44, 62, 80, 0.18);
+}
+.card.dark-mode {
+  background-color: #23243a;
+  color: #e0e7ff;
+}
+
+/* === TYPOGRAPHY === */
+h2 {
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+hr {
+  margin: 1.2rem 0;
+  border-top: 2px solid #6c63ff;
+}
+em {
+  font-style: italic;
+  color: #555;
+}
+
+/* === NAVBAR === */
+.navbar {
+  border-bottom: 2px solid #23243a;
+  transition: box-shadow 0.3s, background 0.3s;
+  background: #fff;
+}
+.dark-mode .navbar {
+  background: #23243a !important;
+  border-bottom: 2px solid #181824;
+}
+.navbar-brand {
+  font-size: 1.5rem;
+  letter-spacing: 1px;
+}
+.nav-link.active {
+  font-weight: bold;
+  color: #6c63ff !important;
+}
+
+/* === LIST GROUP === */
+.list-group-item {
+  background: transparent;
+  border: none;
+  font-size: 1.1rem;
+  padding-left: 0;
+}
+
+/* === MODAL === */
+.modal-content {
+  border-radius: 12px;
+}
+.modal-content.dark-mode {
+  background-color: #23243a;
+  color: #e0e7ff;
+}
+
+/* === ANIMATIONS === */
+.animate__animated {
+  animation-duration: 1s;
+}
+.animate__fadeInUp {
+  animation-duration: 1.2s;
+}
+.animate__pulse {
+  animation-duration: 1.5s;
+}
+
+/* === THEME MODES === */
+body.dark-mode {
+  background: linear-gradient(135deg, #181824 60%, #23243a 100%);
+  color: #e0e7ff;
+}
+.navbar.dark-mode {
+  border-bottom: 2px solid #181824;
+}
+
+/* === RESPONSIVE === */
+@media (max-width: 768px) {
+  .card {
+    padding: 1rem;
+  }
+  h2 {
+    font-size: 1.3rem;
+  }
+}

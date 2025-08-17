@@ -14,10 +14,21 @@ import docx2txt
 
 # Configure these if your binaries are in nonstandard places
 # (You can set environment variables TESSERACT_CMD and POPPLER_PATH)
-TESSERACT_CMD = os.environ.get("TESSERACT_CMD", "./Tesseract-OCR/tesseract.exe")
-POPPLER_PATH = os.environ.get("POPPLER_PATH", "./poppler/poppler-24.08.0/Library/bin")
+utils_dir = os.path.dirname(__file__)
+TESSERACT_CMD = os.environ.get("TESSERACT_CMD", os.path.abspath(os.path.join(utils_dir, "Tesseract-OCR", "tesseract.exe")))
+POPPLER_PATH = os.environ.get("POPPLER_PATH", os.path.abspath(os.path.join(utils_dir, "poppler", "poppler-24.08.0", "Library", "bin")))
+
+# Add Poppler to PATH for pdf2image
+if os.path.exists(POPPLER_PATH) and POPPLER_PATH not in os.environ['PATH']:
+    os.environ['PATH'] += os.pathsep + POPPLER_PATH
 
 pytesseract.pytesseract.tesseract_cmd = TESSERACT_CMD
+
+# Verify paths exist
+if not os.path.exists(TESSERACT_CMD):
+    print(f"Warning: Tesseract not found at {TESSERACT_CMD}")
+if not os.path.exists(POPPLER_PATH):
+    print(f"Warning: Poppler not found at {POPPLER_PATH}")
 
 
 def _remove_headers_footers(text: str, min_occurrences: int = 2) -> str:
@@ -82,6 +93,7 @@ def clean_text(text: str) -> str:
 def _ocr_pdf(file_path: str, dpi: int = 300) -> str:
     text = ""
     try:
+        print(f"[DEBUG] Attempting OCR with poppler_path: {POPPLER_PATH}")
         images = convert_from_path(file_path, poppler_path=POPPLER_PATH, dpi=dpi)
         for img in images:
             txt = pytesseract.image_to_string(img)
@@ -89,6 +101,8 @@ def _ocr_pdf(file_path: str, dpi: int = 300) -> str:
     except Exception as e:
         # Best-effort: if convert_from_path fails, return empty
         print(f"[text_extraction] OCR PDF failed: {e}")
+        print(f"[DEBUG] File path: {file_path}")
+        print(f"[DEBUG] Poppler path: {POPPLER_PATH}")
     return text
 
 
@@ -113,24 +127,33 @@ def extract_text(file_path: str) -> Optional[str]:
       - DOCX: use docx2txt; if empty fallback to OCR of embedded images
     Returns cleaned text (never None — returns empty string when extraction fails).
     """
+    print(f"[DEBUG] extract_text called with file_path: '{file_path}'")
+    
+    if not file_path or not file_path.strip():
+        raise ValueError("Empty file path provided")
+        
     if not os.path.exists(file_path):
         raise FileNotFoundError(f"File not found: {file_path}")
 
     ext = os.path.splitext(file_path)[1].lower()
     raw = ""
+    print(f"[DEBUG] File extension: {ext}")
 
     try:
         if ext == ".pdf":
             try:
+                print(f"[DEBUG] Attempting pdfplumber extraction")
                 with pdfplumber.open(file_path) as pdf:
                     for page in pdf.pages:
                         page_text = page.extract_text() or ""
                         raw += page_text + "\n"
+                print(f"[DEBUG] pdfplumber extracted {len(raw)} characters")
             except Exception as e:
                 print(f"[text_extraction] pdfplumber failed: {e}; will try OCR fallback.")
                 raw = ""
 
             if not raw.strip():
+                print(f"[DEBUG] pdfplumber returned empty, trying OCR")
                 raw = _ocr_pdf(file_path)
 
         elif ext == ".docx":
@@ -147,7 +170,10 @@ def extract_text(file_path: str) -> Optional[str]:
             raise ValueError("Unsupported file type. Use .pdf or .docx")
     except Exception as e:
         print(f"[text_extraction] Unexpected extraction error: {e}")
+        import traceback
+        traceback.print_exc()
         raw = ""
 
     cleaned = clean_text(raw)
+    print(f"[DEBUG] Final cleaned text length: {len(cleaned) if cleaned else 0}")
     return cleaned

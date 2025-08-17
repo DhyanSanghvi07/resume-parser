@@ -1,0 +1,12 @@
+Flask
+flask-cors
+pdfplumber
+pdf2image
+pytesseract
+Pillow
+docx2txt
+spacy
+fpdf
+PyMuPDF
+pyyaml
+python-multipart

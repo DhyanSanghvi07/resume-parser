@@ -94,7 +94,9 @@ def save_json_for_web(parsed_data: Dict[str, Any], file_path: str) -> None:
     Saves parsed data as a JSON file optimized for frontend use.
     Ensures proper UTF-8 encoding and no extra Python data types.
     """
-    os.makedirs(os.path.dirname(file_path), exist_ok=True)
+    output_dir = os.path.dirname(file_path)
+    if output_dir: # Only create directory if path is not empty (i.e., not saving to current directory)
+        os.makedirs(output_dir, exist_ok=True)
 
     clean_data = {
         "personal_info": parsed_data.get("personal_info", {}),

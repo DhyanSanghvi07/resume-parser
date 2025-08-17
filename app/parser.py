@@ -12,7 +12,7 @@ from modules.basic_info_extractor import extract_basic_info
 from modules.education_extractor import extract_education
 from modules.experience_extractor import extract_experience
 from modules.skills_extractor import extract_skills_data
-from output_formatter import save_json_for_web, format_console
+from app.output_formatter import save_json_for_web, format_console
 
 def parse_resume(path_or_text: str) -> Dict[str, Any]:
     """
