@@ -117,6 +117,21 @@ body {
   transition: background-color 0.2s ease, border-color 0.2s ease;
 }
 
+.upload-box.drag-over {
+  background-color: rgba(59, 130, 246, 0.2);
+  border-color: #3B82F6;
+}
+
+.light-mode .upload-box.drag-over {
+  background-color: #E0E7FF;
+  border-color: #4F46E5;
+}
+
+.dark-mode .upload-box.drag-over {
+  background-color: #1E3A8A;
+  border-color: #60A5FA;
+}
+
 /* === PREVIEW BOX === */
 .preview-box {
   width: 100%;

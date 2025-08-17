@@ -17,7 +17,7 @@
     <!-- Navbar -->
     <nav class="navbar navbar-dark px-3 sticky-top" style="background-color: #6C63FF;">
         <div class="container-fluid">
-            <a class="navbar-brand fw-bold text-white" href="#">
+            <a class="navbar-brand fw-bold text-white" href="#" aria-label="Home">
                 <i class="fas fa-file-alt me-2"></i> RESUME<span class="text-light">PARSER</span>
             </a>
 
@@ -34,12 +34,12 @@
                         <a class="nav-link text-white" href="../Contact Page/index.html">Contact</a>
                     </li>
                 </ul>
-                <button id="theme-toggle" class="btn btn-light ms-3"><i class="fa fa-moon"></i></button>
+                <button id="theme-toggle" class="btn btn-light ms-3" aria-label="Toggle theme"><i class="fa fa-moon"></i></button>
             </div>
 
             <!-- Mobile Menu -->
             <div class="d-flex d-lg-none align-items-center">
-                <button id="theme-toggle" class="btn btn-light me-2"><i class="fas fa-moon"></i></button>
+                <button id="theme-toggle" class="btn btn-light me-2" aria-label="Toggle theme"><i class="fas fa-moon"></i></button>
                 <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileMenu"
                     aria-controls="mobileMenu" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -93,15 +93,18 @@
         <section class="upload-preview text-center my-5" id="output">
             <div class="upload-box p-4  rounded w-100 mb-5">
                 <p class="upload-label">Drop your resume here or choose a file.<br><small>PDF and DOCX only.</small></p>
-                <input type="file" id="resume-file" accept=".pdf,.doc,.docx" class="d-none">
-                <button class="btn mt-3" onclick="document.getElementById('resume-file').click()">
+                <input type="file" id="resume-file" accept=".pdf,.doc,.docx" class="d-none" aria-describedby="upload-label-text">
+                <button class="btn mt-3" onclick="document.getElementById('resume-file').click()" type="button" aria-label="Upload resume file">
                     <i class="fas fa-upload"></i> Drag & Drop OR Upload
                 </button>
-                <button type="submit" class="btn mt-3" id="upload-btn">Parse Resume</button>
+                <button type="submit" class="btn mt-3" id="upload-btn" aria-label="Parse selected resume">Parse Resume</button>
+                <button type="button" class="btn btn-secondary mt-3 ms-2" id="clear-file-btn" aria-label="Clear selected file">Clear</button>
             </div>
+            <div id="file-name-display" class="text-muted mt-2 d-none"></div>
             <div class="preview-box mt-4 w-100">
-                <iframe id="previewFrame" title="Resume Preview" src="https://msnlabs.com/img/resume-sample.pdf"></iframe>
+                <iframe id="previewFrame" title="Resume Preview"></iframe>
             </div>
+            <!-- <div id="error-message" class="alert alert-danger mt-3 d-none" role="alert"></div> -->
         </section>
     </main>
 
@@ -109,6 +112,21 @@
     <footer id="contact" class="text-center py-4">
         <p class="mb-0">Made with <i class="fa fa-heart"></i> for Internship Project | Contact: info@resumeparser.com</p>
     </footer>
+
+    <!-- Toast Container -->
+    <div class="toast-container position-fixed top-0 end-0 p-3">
+        <!-- Toast messages will be appended here -->
+    </div>
+
+    <!-- Loading Overlay -->
+    <div id="loading-overlay" class="d-none position-fixed top-0 start-0 w-100 h-100 bg-dark bg-opacity-75 d-flex justify-content-center align-items-center" style="z-index: 1050;">
+        <div class="text-center text-white">
+            <div class="spinner-border text-light" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+            <p class="mt-3 h5">Parsing your resume...</p>
+        </div>
+    </div>
 
     <script src="/Home Page/script.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>

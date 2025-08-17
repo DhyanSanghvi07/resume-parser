@@ -69,8 +69,12 @@
   
   <!-- Main Content -->
   <div class="container my-5">
-    <div id="output">
-      <!-- Resume data will be loaded here dynamically -->
+    <div class="d-flex justify-content-end mb-3">
+        <button id="download-json-btn" class="btn btn-primary me-2"><i class="fas fa-download"></i> Download JSON</button>
+        <button id="download-pdf-btn" class="btn btn-info text-white"><i class="fas fa-file-pdf"></i> Download PDF</button>
+    </div>
+    <div id="output-accordion" class="accordion">
+      <!-- Parsed resume data will be loaded here dynamically into collapsible sections -->
       <div class="text-center">
         <div class="spinner-border text-primary" role="status">
           <span class="visually-hidden">Loading...</span>
@@ -85,5 +89,9 @@
   </footer>
   <script src="script.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Toast Container -->
+  <div class="toast-container position-fixed top-0 end-0 p-3">
+      <!-- Toast messages will be appended here -->
+  </div>
 </body>
 </html>

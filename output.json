@@ -1,38 +1,36 @@
 {
     "personal_info": {
-        "name": "Profile School Education",
-        "email": "ruturajvishwamitre@gmail.com",
-        "phone": "+91 7710850405",
-        "social_links": {}
+        "name": "Jasmine Bell",
+        "email": "jasminebell@gmail.com",
+        "phone": "9978352075",
+        "social_links": {
+            "linkedin": "https://qlinkedin.com/in/jasmine"
+        }
     },
     "education": [
         {
-            "degree": "Master",
-            "university": "Greens English School",
-            "years": "Not Found"
-        },
-        {
-            "degree": "Diploma",
-            "university": "CONTACT COLLEGE ADDRESS Vivekanand Education Society",
-            "years": "2023"
+            "degree": "BSC",
+            "university": "BELL",
+            "years": "2075"
         }
     ],
     "experience": [
         {
-            "company": "Greens English School",
-            "role": "Not Found",
-            "duration": "Not Found",
+            "company": "Thompson Ltd Management",
+            "role": "Intern",
+            "duration": "2013",
             "responsibilities": [
-                "with diverse professionals, learn new Greens English School"
+                "Intern MBA Finance",
+                "Anderson School of Thompson Ltd Management GPA 2013 3rd Cross ,Bengaluru Reviewed and encoded the company s receipts, financial reports, and University of Bengaluru 3.85 / 4.0 taxation requirements 2012",
+                "2013 Compiled monthly, quarterly, and annual financial statements and Jayanagar,Bengaluru reports for company's top",
+                "ten clients across three industries, serving more than 20,000 individual customers nationwide. BSC Business Administration GPA University of Bengaluru 3.9 / 4.0 2008"
             ]
         }
     ],
     "skills": [
-        "c++",
-        "css",
-        "html",
-        "java",
-        "python"
+        "data entry",
+        "reporting",
+        "risk management"
     ],
     "certifications": [],
     "awards": []
