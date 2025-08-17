@@ -93,16 +93,11 @@ def clean_text(text: str) -> str:
 def _ocr_pdf(file_path: str, dpi: int = 300) -> str:
     text = ""
     try:
-        print(f"[DEBUG] Attempting OCR with poppler_path: {POPPLER_PATH}")
         images = convert_from_path(file_path, poppler_path=POPPLER_PATH, dpi=dpi)
-        for img in images:
-            txt = pytesseract.image_to_string(img)
-            text += txt + "\n"
     except Exception as e:
         # Best-effort: if convert_from_path fails, return empty
         print(f"[text_extraction] OCR PDF failed: {e}")
-        print(f"[DEBUG] File path: {file_path}")
-        print(f"[DEBUG] Poppler path: {POPPLER_PATH}")
+        text = ""
     return text
 
 
@@ -127,8 +122,6 @@ def extract_text(file_path: str) -> Optional[str]:
       - DOCX: use docx2txt; if empty fallback to OCR of embedded images
     Returns cleaned text (never None — returns empty string when extraction fails).
     """
-    print(f"[DEBUG] extract_text called with file_path: '{file_path}'")
-    
     if not file_path or not file_path.strip():
         raise ValueError("Empty file path provided")
         
@@ -137,23 +130,19 @@ def extract_text(file_path: str) -> Optional[str]:
 
     ext = os.path.splitext(file_path)[1].lower()
     raw = ""
-    print(f"[DEBUG] File extension: {ext}")
 
     try:
         if ext == ".pdf":
             try:
-                print(f"[DEBUG] Attempting pdfplumber extraction")
                 with pdfplumber.open(file_path) as pdf:
                     for page in pdf.pages:
                         page_text = page.extract_text() or ""
                         raw += page_text + "\n"
-                print(f"[DEBUG] pdfplumber extracted {len(raw)} characters")
             except Exception as e:
                 print(f"[text_extraction] pdfplumber failed: {e}; will try OCR fallback.")
                 raw = ""
 
             if not raw.strip():
-                print(f"[DEBUG] pdfplumber returned empty, trying OCR")
                 raw = _ocr_pdf(file_path)
 
         elif ext == ".docx":
@@ -170,10 +159,7 @@ def extract_text(file_path: str) -> Optional[str]:
             raise ValueError("Unsupported file type. Use .pdf or .docx")
     except Exception as e:
         print(f"[text_extraction] Unexpected extraction error: {e}")
-        import traceback
-        traceback.print_exc()
         raw = ""
 
     cleaned = clean_text(raw)
-    print(f"[DEBUG] Final cleaned text length: {len(cleaned) if cleaned else 0}")
     return cleaned
