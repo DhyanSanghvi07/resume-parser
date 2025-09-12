@@ -100,8 +100,15 @@ function displayResumeData(data) {
             ${info.name ? `<p><strong>Name:</strong> ${info.name} ${createCopyButton(info.name, 'Copy Name')}</p>` : ''}
             ${info.email ? `<p><strong>Email:</strong> ${info.email} ${createCopyButton(info.email, 'Copy Email')}</p>` : ''}
             ${info.phone ? `<p><strong>Phone:</strong> ${info.phone} ${createCopyButton(info.phone, 'Copy Phone')}</p>` : ''}
-            ${info.location || info.address ? `<p><strong>Location:</strong> ${info.location || info.address} ${createCopyButton(info.location || info.address, 'Copy Location')}</p>` : ''}
         `;
+
+        if (info.social_links && Object.keys(info.social_links).length > 0) {
+            content += `<p><strong>Social Links:</strong></p>`;
+            for (const [platform, url] of Object.entries(info.social_links)) {
+                content += `<p>• <a href="${url}" target="_blank">${platform}</a> ${createCopyButton(url, 'Copy Link')}</p>`;
+            }
+        }
+
         outputAccordion.insertAdjacentHTML('beforeend', createAccordionItem(`Personal${sectionCounter++}`, 'Personal Information', content, true));
     }
 
@@ -184,30 +191,46 @@ function displayResumeData(data) {
 
     // Add event listeners for copy buttons
     function addCopyButtonListeners() {
+        // Prevent duplicate listeners by replacing each .copy-icon with a fresh clone (removes previous listeners)
+        document.querySelectorAll('.copy-icon').forEach(orig => {
+            const clone = orig.cloneNode(true);
+            orig.parentNode.replaceChild(clone, orig);
+        });
+
+        // Attach listeners to the fresh clones
         document.querySelectorAll('.copy-icon').forEach(button => {
             button.addEventListener('click', async (event) => {
                 const textToCopy = event.currentTarget.dataset.textToCopy;
+
+                // Try clipboard write first; only after success do non-critical UI updates.
                 try {
                     await navigator.clipboard.writeText(textToCopy);
                     showToast('Copied to clipboard!', 'success', 2000);
-                    // Optionally, change icon briefly or tooltip text
+                } catch (err) {
+                    console.error('Failed to copy: ', err);
+                    showToast('Failed to copy to clipboard.', 'danger');
+                    return; // stop here — don't run tooltip code if clipboard failed
+                }
+
+                // Non-critical UI updates (tooltip/title) — keep in its own try/catch so they don't trigger failure toast
+                try {
                     const originalTitle = event.currentTarget.title;
                     event.currentTarget.title = 'Copied!';
-                    // Re-initialize tooltip to show new title
-                    const tooltip = bootstrap.Tooltip.getInstance(event.currentTarget);
+                    // Using getInstance may return null; guard it
+                    const tooltip = bootstrap ? bootstrap.Tooltip.getInstance(event.currentTarget) : null;
                     if (tooltip) tooltip.hide();
                     setTimeout(() => {
                         event.currentTarget.title = originalTitle;
                         if (tooltip) tooltip.show();
-                    }, 1000); // Revert tooltip after 1 second
-
-                } catch (err) {
-                    console.error('Failed to copy: ', err);
-                    showToast('Failed to copy to clipboard.', 'danger');
+                    }, 1000);
+                } catch (uiErr) {
+                    // ignore tooltip-related errors — they must not make the user think copy failed
+                    console.warn('Tooltip update failed (ignored):', uiErr);
                 }
             });
         });
     }
+
 
     // If no data found at all
     if (outputAccordion.innerHTML === '') {

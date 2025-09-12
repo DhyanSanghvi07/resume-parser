@@ -1,4 +1,5 @@
 data/
+output.json
 #Python Bytecode Files
 _pycache_/
 *.py[cod]

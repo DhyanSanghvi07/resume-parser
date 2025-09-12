@@ -1,37 +1,46 @@
 {
     "personal_info": {
-        "name": "Jasmine Bell",
-        "email": "jasminebell@gmail.com",
-        "phone": "9978352075",
+        "name": "Sebastian Martin",
+        "email": "sebastianmartin@gmail.com",
+        "phone": "N/A",
         "social_links": {
-            "linkedin": "https://qlinkedin.com/in/jasmine"
+            "LinkedIn": "https://linkedin.com/in/sebastian"
         }
     },
     "education": [
         {
-            "degree": "BSC",
-            "university": "BELL",
-            "years": "2075"
+            "degree": "Master",
+            "university": "Master",
+            "years": "Not Found"
+        },
+        {
+            "degree": "Bachelor",
+            "university": "University of Chandigarh 01/2011 01/2013 Chandigarh",
+            "years": "2011"
         }
     ],
     "experience": [
         {
-            "company": "Thompson Ltd Management",
-            "role": "Intern",
-            "duration": "2013",
+            "company": "Amazon",
+            "role": "Assistant",
+            "duration": "2020",
             "responsibilities": [
-                "Intern MBA Finance",
-                "Anderson School of Thompson Ltd Management GPA 2013 3rd Cross ,Bengaluru Reviewed and encoded the company s receipts, financial reports, and University of Bengaluru 3.85 / 4.0 taxation requirements 2012",
-                "2013 Compiled monthly, quarterly, and annual financial statements and Jayanagar,Bengaluru reports for company's top",
-                "ten clients across three industries, serving more than 20,000 individual customers nationwide. BSC Business Administration GPA University of Bengaluru 3.9 / 4.0 2008"
+                "Streamlined the digital asset management process, Senior Video Editor reducing file retrieval times by 40%. Amazon 05/2020 Present Sector 15 ,Chandigarh Led a team of editors to produce over 100 high",
+                "quality videos annually, Enhanced Video Quality enhancing brand visibility and customer engagement. Developed innovative motion graphics, contributing to Managed the post",
+                "production process for a major campaign, resulting in a a 25% increase in viewer retention. 30% increase in viewer engagement and a 20% rise in conversion rates. Developed and implemented innovative motion graphics that improved video Trained Junior Editors quality, contributing to a 25% increase in viewer retention. Collaborated with executive teams to ensure high production standards, Conducted training sessions on advanced editing meeting tight deadlines and maintaining brand consistency. techniques, fostering a skilled and versatile team. Streamlined the digital asset management process, reducing file retrieval times by 40% and improving workflow efficiency. Trained junior editors on advanced editing techniques and software, fostering SKILLS a culture of continuous learning and development. Adobe Premiere Pro Adobe After Effects Video Editor Microsoft 08/2016 04/2020 Sector 15 ,Chandigarh Digital Cinema Cameras Produced and edited over 80 corporate videos annually, contributing to a 15% increase in internal communication effectiveness. Studio Lighting Techniques Implemented new editing techniques and tools, improving video production quality and efficiency by 20%. Digital Asset Management Motion Graphics Collaborated with marketing teams to create engaging promotional content, resulting in a 25% increase in social media followers. Executed light motion graphics work for various projects, enhancing the visual appeal and professionalism of the final products. CERTIFICATION Conducted regular training sessions for team members on Adobe Creative Suite, fostering a more skilled and versatile team. Advanced Video Editing Techniques LinkedIn Learning course focusing on professional Assistant Video Editor video editing skills and software proficiency. Starz 01/2013 07/2016 Sector 15 ,Chandigarh Assisted in the editing of award",
+                "winning TV shows and films, contributing to Motion Graphics for Video Editors high audience ratings and critical acclaim. Lynda.com certification in creating dynamic motion Managed digital asset transfers and ensured seamless workflow between graphics using Adobe After Effects. departments, resulting in timely project completions. Collaborated with senior editors on complex editing tasks, gaining valuable hands",
+                "on experience in high",
+                "pressure environments. INTERESTS Maintained and organized video files and equipment, ensuring all resources were readily available for production use. Filmmaking Passionate about creating engaging and high"
             ]
         }
     ],
     "skills": [
-        "data entry",
-        "reporting",
-        "risk management"
+        "communication",
+        "marketing"
     ],
-    "certifications": [],
+    "certifications": [
+        "CERTIFICATION\n Conducted regular training sessions for team members on Adobe Creative\nSuite, fostering a more skilled and versatile team.",
+        "Lynda.com certification in creating dynamic motion\n Managed digital asset transfers and ensured seamless workflow between\ngraphics using Adobe After Effects."
+    ],
     "awards": []
 }

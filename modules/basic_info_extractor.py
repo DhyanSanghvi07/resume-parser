@@ -1,13 +1,15 @@
 import re
-import fitz  # PyMuPDF
 
 def clean_links(raw_links):
     cleaned = []
     for link in raw_links:
         link = re.sub(r'[\s\)\]\.]+$', '', link)
         if "." in link and not link.endswith(("/", "-", ".")):
-            cleaned.append(link.strip())
-    return list(set(cleaned))
+            candidate = link.strip()
+            if candidate and candidate not in cleaned:
+                cleaned.append(candidate)
+    return cleaned
+
 
 def extract_basic_info(text, extra_links=None):
     if extra_links is None:
@@ -16,7 +18,7 @@ def extract_basic_info(text, extra_links=None):
     name = None
     for line in text.split("\n"):
         line = line.strip()
-        if re.match(r"^[A-Z][a-z]+\s[A-Z][a-z]+$", line):
+        if re.match(r"^[A-Z][a-z]+(\s[A-Z][a-zA-Z\.]+){1,2}$", line):
             name = line
             break
         elif re.match(r"^[A-Z][A-Z\s]+$", line) and 2 <= len(line.split()) <= 4:
@@ -24,37 +26,82 @@ def extract_basic_info(text, extra_links=None):
             break
     name = name or "N/A"
 
-    match = re.search(r"[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+", text)
-    email = match.group() if match else "N/A"
+    email_match = re.search(r"[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+", text)
+    email = email_match.group() if email_match else "N/A"
 
-    match = match = re.search(r'(\+?\d{1,3}[-.\s]?)?(\(?\d{3,5}\)?[-.\s]?)?\d{6,10}', text)
-    phone = match.group().strip() if match else "N/A"
+    phone_match = re.search(
+        r"(\+?\d{1,3}[-.\s]?)?(\(?\d{2,4}\)?[-.\s]?)?\d{6,10}", text
+    )
+    phone = phone_match.group().strip() if phone_match else "N/A"
 
     visible_links = re.findall(r"https?://[^\s\n\r\)\]]+", text)
-    bare_links = re.findall(r"\b(?:www\.)?(?:[a-zA-Z0-9-]+\.)+[a-z]{2,6}/[^\s\n\r]+", text)
-    for link in bare_links:
-        if not link.startswith("http"):
-            link = "https://" + link
-        visible_links.append(link)
+    www_links = re.findall(r"(?:www\.[^\s\n\r\)\]]+)", text)
+    bare_links = re.findall(r"(?:[a-zA-Z0-9-]+\.)+[a-z]{2,6}(?:/[^\s\n\r\)\]]+)?", text)
 
-    all_links = clean_links(visible_links + extra_links)
+    combined = visible_links + www_links + bare_links + extra_links
+    all_links = clean_links(combined)
 
-    known_social_sites = [
-        "linkedin.com", "github.com", "twitter.com", "facebook.com",
-        "instagram.com", "medium.com", "youtube.com", "about.me",
-        "behance.net", "dribbble.com", "naukri.com", "shine.com",
-        "timesjobs.com", "internshala.com", "apna.co", "hirect.in",
-        "angel.co", "quora.com", "stackoverflow.com", "telegram.me",
-        "telegram.org", "snapchat.com"
-    ]
+    normalized_links = []
+    for raw in all_links:
+        link = raw.strip()
+        link = re.sub(r'[\u200b\u200c\u200d\uFEFF]', '', link)
+        link = re.sub(r'^[^a-zA-Z0-9]+', '', link)          
+        link = re.sub(r'^[qQ](?=linkedin\.com)', '', link)  
+
+        m = re.search(
+            r'((?:[a-zA-Z0-9-]+\.)+[a-z]{2,6}(?:/[^\s\r\n\)\]]*)?)',
+            link,
+            flags=re.IGNORECASE
+        )
+
+        if m:
+            domain_path = m.group(1)
+            scheme_m = re.search(r'https?://', link, flags=re.IGNORECASE)
+            scheme = scheme_m.group(0) if scheme_m else 'https://'
+            link = scheme + domain_path
+        else:
+            link = re.sub(r'^[^\w]+', '', link)
+            if not link.lower().startswith('http'):
+                link = 'https://' + link
+
+        link = re.sub(r'^[\s\)\]\.]+', '', link)
+        link = re.sub(r'[\s\)\]\.]+$', '', link)
+
+        normalized_links.append(link)
+
+    normalized_links = list(dict.fromkeys(normalized_links))
+
+    social_sites_map = {
+        "linkedin.com": "LinkedIn",
+        "github.com": "GitHub",
+        "twitter.com": "Twitter",
+        "facebook.com": "Facebook",
+        "instagram.com": "Instagram",
+        "medium.com": "Medium",
+        "youtube.com": "YouTube",
+        "about.me": "AboutMe",
+        "behance.net": "Behance",
+        "dribbble.com": "Dribbble",
+        "naukri.com": "Naukri",
+        "shine.com": "Shine",
+        "timesjobs.com": "TimesJobs",
+        "internshala.com": "Internshala",
+        "apna.co": "Apna",
+        "hirect.in": "Hirect",
+        "angel.co": "AngelList",
+        "quora.com": "Quora",
+        "stackoverflow.com": "StackOverflow",
+        "telegram.me": "Telegram",
+        "telegram.org": "Telegram",
+        "snapchat.com": "Snapchat"
+    }
 
     social_links = {}
-    for link in all_links:
+    for link in normalized_links:
         domain_match = re.findall(r"https?://(?:www\.)?([^/]+)", link)
         domain = domain_match[0].lower() if domain_match else ""
-        for site in known_social_sites:
+        for site, platform in social_sites_map.items():
             if site in domain:
-                platform = site.split(".")[0]
                 if platform not in social_links:
                     social_links[platform] = link
                 break
