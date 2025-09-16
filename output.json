@@ -1,46 +1,38 @@
 {
     "personal_info": {
-        "name": "Sebastian Martin",
-        "email": "sebastianmartin@gmail.com",
-        "phone": "N/A",
+        "name": "Arjun Mehta",
+        "email": "arjunmehta.marketing@gmail.com",
+        "phone": "+91-8765432109",
         "social_links": {
-            "LinkedIn": "https://linkedin.com/in/sebastian"
+            "LinkedIn": "https://linkedin.com/in/arjunmehta-marketing"
         }
     },
     "education": [
         {
-            "degree": "Master",
-            "university": "Master",
-            "years": "Not Found"
-        },
-        {
-            "degree": "Bachelor",
-            "university": "University of Chandigarh 01/2011 01/2013 Chandigarh",
-            "years": "2011"
+            "degree": "B.Com",
+            "university": "Symbiosis Institute of Business Management",
+            "years": "2019"
         }
     ],
     "experience": [
         {
-            "company": "Amazon",
-            "role": "Assistant",
-            "duration": "2020",
+            "company": "BrightWave Technologies",
+            "role": "Not Found",
+            "duration": "Marketing Specialist 01/2022 Present | Pune Led digital campaigns that generated a 120% increase in qualified leads within 12 months. Managed influencer partnerships that improved brand reach by 65%. Planned and executed SEO strategy",
             "responsibilities": [
-                "Streamlined the digital asset management process, Senior Video Editor reducing file retrieval times by 40%. Amazon 05/2020 Present Sector 15 ,Chandigarh Led a team of editors to produce over 100 high",
-                "quality videos annually, Enhanced Video Quality enhancing brand visibility and customer engagement. Developed innovative motion graphics, contributing to Managed the post",
-                "production process for a major campaign, resulting in a a 25% increase in viewer retention. 30% increase in viewer engagement and a 20% rise in conversion rates. Developed and implemented innovative motion graphics that improved video Trained Junior Editors quality, contributing to a 25% increase in viewer retention. Collaborated with executive teams to ensure high production standards, Conducted training sessions on advanced editing meeting tight deadlines and maintaining brand consistency. techniques, fostering a skilled and versatile team. Streamlined the digital asset management process, reducing file retrieval times by 40% and improving workflow efficiency. Trained junior editors on advanced editing techniques and software, fostering SKILLS a culture of continuous learning and development. Adobe Premiere Pro Adobe After Effects Video Editor Microsoft 08/2016 04/2020 Sector 15 ,Chandigarh Digital Cinema Cameras Produced and edited over 80 corporate videos annually, contributing to a 15% increase in internal communication effectiveness. Studio Lighting Techniques Implemented new editing techniques and tools, improving video production quality and efficiency by 20%. Digital Asset Management Motion Graphics Collaborated with marketing teams to create engaging promotional content, resulting in a 25% increase in social media followers. Executed light motion graphics work for various projects, enhancing the visual appeal and professionalism of the final products. CERTIFICATION Conducted regular training sessions for team members on Adobe Creative Suite, fostering a more skilled and versatile team. Advanced Video Editing Techniques LinkedIn Learning course focusing on professional Assistant Video Editor video editing skills and software proficiency. Starz 01/2013 07/2016 Sector 15 ,Chandigarh Assisted in the editing of award",
-                "winning TV shows and films, contributing to Motion Graphics for Video Editors high audience ratings and critical acclaim. Lynda.com certification in creating dynamic motion Managed digital asset transfers and ensured seamless workflow between graphics using Adobe After Effects. departments, resulting in timely project completions. Collaborated with senior editors on complex editing tasks, gaining valuable hands",
-                "on experience in high",
-                "pressure environments. INTERESTS Maintained and organized video files and equipment, ensuring all resources were readily available for production use. Filmmaking Passionate about creating engaging and high"
+                "BrightWave Technologies, Senior Marketing Specialist 01/2022 Present | Pune Led digital campaigns that generated a 120% increase in qualified leads within 12 months. Managed influencer partnerships that improved brand reach by 65%. Planned and executed SEO strategy, increasing organic traffic by 85%. Developed quarterly marketing plans aligned with business objectives."
             ]
         }
     ],
     "skills": [
-        "communication",
-        "marketing"
+        "content creation",
+        "digital marketing",
+        "marketing",
+        "sem",
+        "seo"
     ],
     "certifications": [
-        "CERTIFICATION\n Conducted regular training sessions for team members on Adobe Creative\nSuite, fostering a more skilled and versatile team.",
-        "Lynda.com certification in creating dynamic motion\n Managed digital asset transfers and ensured seamless workflow between\ngraphics using Adobe After Effects."
+        "Digital Marketing (SEO, SEM, PPC, Google Ads, Meta Ads), Social Media Strategy & Management,\nContent Creation & Copywriting, Market Research & Consumer Insights, Analytics Tools (Google\nAnalytics, Google Search Console)\nCERTIFICATES\nGoogle Ads Search Certification Google\nAdvanced Content Marketing HubSpot Academy\nLinkedIn Marketing Strategy LinkedIn Learning"
     ],
     "awards": []
 }
