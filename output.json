@@ -1,44 +1,46 @@
 {
     "personal_info": {
-        "name": "Aarav Jain",
-        "email": "aarav.jain.green@gmail.com",
+        "name": "Professional Summary",
+        "email": "rahul.mehta@email.com",
         "phone": "N/A",
-        "social_links": {
-            "LinkedIn": "https://linkedin.com/in/aaravjain-sustainability"
-        }
+        "social_links": {}
     },
     "education": [
         {
-            "degree": "M.Sc",
-            "university": "Environmental Science Savitribai Phule Pune University",
-            "years": "2018",
+            "degree": "N/A",
+            "university": "Marketing Indian Institute of Management (IIM",
+            "years": "2020",
             "grade": "N/A"
         },
         {
-            "degree": "B.Sc",
-            "university": "Environmental Studies Fergusson College",
-            "years": "2015",
+            "degree": "Bachelor",
+            "university": "Bachelor of Commerce",
+            "years": "2018",
             "grade": "N/A"
         }
     ],
     "experience": [
         {
-            "company": "Sustainability Specialist GreenFuture Consulting",
-            "role": "Analyst",
-            "duration": "Feb 2022 Present Led sustainability audits for 12+ corporate clients",
+            "company": "Digital Marketing Specialist ABC Solutions Pvt. Ltd.",
+            "role": "lead",
+            "duration": "Not Found",
             "responsibilities": [
-                "Sustainability Specialist GreenFuture Consulting, Pune Feb 2022 Present Led sustainability audits for 12+ corporate clients, reducing energy consumption by an average of 15%. Developed carbon",
-                "reduction strategies aligned with India s 2070 Net",
-                "Zero Target. Prepared ESG reports compliant with GRI and CDP standards. Environmental Analyst EcoVision Pvt. Ltd., Pune Jan 2020 Jan 2022 Conducted life",
-                "cycle assessments for consumer goods. Designed waste recycling programs, achieving 40% reduction in landfill disposal. Monitored sustainability KPIs and presented quarterly reports to management."
+                "Digital Marketing Specialist ABC Solutions Pvt",
+                ", Mumbai Jan 2021 Present Planned and executed SEO strategies, improving website ranking from page 5 to page 1 on Google within 6 months",
+                "Managed ad campaigns on Google Ads and Facebook, resulting in a 35% increase in lead generation",
+                "Marketing Executive Bright Media Pvt",
+                ", Pune Jun 2018 Dec 2020 Handled social media campaigns, increasing followers by 50% across platforms",
+                "Assisted in developing branding strategies that boosted client retention by 20%"
             ]
         }
     ],
     "skills": [
-        "reporting"
+        "communication",
+        "digital marketing",
+        "marketing"
     ],
     "certifications": [
-        "Environmental, Social & Governance (ESG) Reporting\n Carbon Footprint Assessment & Net-Zero Strategies\n Renewable Energy Systems (Solar, Wind)\n Waste Management & Circular Economy Models\n Green Building & LEED Certification\nAchievements\n Awarded Top 30 Under 30 in Sustainability by India GreenTech Forum (2023)."
+        "Digital Marketing Tools:Google Analytics, SEMrush, HubSpot, Canva\n Advertising: Google Ads, Facebook Ads, LinkedIn Ads\n Soft Skills: Communication, Leadership, Problem-Solving, Creativity\n Other: MS Office Suite, Content Writing\nACHIEVEMENTS\n Awarded Best Employee of the Year at ABC Solutions, 2022."
     ],
     "awards": []
 }

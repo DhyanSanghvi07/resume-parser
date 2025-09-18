@@ -2,6 +2,7 @@ import re
 from typing import List, Dict
 import spacy
 
+# load spaCy English model
 nlp = spacy.load("en_core_web_sm")
 
 SECTION_HEADERS = re.compile(r'^(EXPERIENCE|WORK EXPERIENCE|PROFESSIONAL EXPERIENCE|EMPLOYMENT)\b', re.I)
@@ -41,7 +42,7 @@ def _merge_bullets(section_text: str) -> List[str]:
                 bullets.append(current.strip())
             current = re.sub(r'^[•\-\*\d\.\)\s]+', '', ln)
         else:
-            # continuation
+            # continuation of previous bullet
             current = (current + " " + ln).strip()
     if current:
         bullets.append(current.strip())
@@ -56,23 +57,31 @@ def extract_experience(text: str) -> List[Dict]:
     section = _section_text(text)
     bullets = _merge_bullets(section)
     results = []
+
     for b in bullets:
-        # try to extract duration (years) via regex
-        duration_match = re.search(r'((Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[^\n,]*)|(\b(19|20)\d{2}\b(?:\s*[-–]\s*(19|20)\d{2})?)', b, re.I)
+        # --- Duration extraction (dates or years) ---
+        duration_match = re.search(
+            r'((Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-z]\s+\d{4}(\s[-–]\s*(Present|\d{4}))?)',
+            b, re.I
+        )
         duration = duration_match.group(0) if duration_match else "Not Found"
 
-        # use spaCy to find ORG and PERSON hints
+        # --- spaCy NER for organizations ---
         doc = nlp(b)
         orgs = [ent.text for ent in doc.ents if ent.label_ == "ORG"]
-        roles = []
-        # heuristics: uppercase words or "Teacher", "Engineer", etc.
-        role_match = re.search(r'\b(Teacher|Engineer|Developer|Manager|Analyst|Intern|Assistant|Lead)\b', b, re.I)
-        role = role_match.group(0) if role_match else "Not Found"
         company = orgs[0] if orgs else "Not Found"
 
-        # responsibilities: split by bullets inside this bullet (.,; or '•')
-        responsibilities = re.split(r'\s*[\u2022\-\*]\s*', b)
-        responsibilities = [r.strip() for r in responsibilities if r.strip() and len(r.strip()) > 10][:6]  # cap
+        # --- Role detection (common job titles) ---
+        role_match = re.search(
+            r'\b(Teacher|Engineer|Developer|Manager|Analyst|Intern|Assistant|Lead|Designer|Consultant)\b',
+            b, re.I
+        )
+        role = role_match.group(0) if role_match else "Not Found"
+
+        # --- Responsibilities ---
+        # Split on punctuation and semicolons, keep meaningful parts
+        responsibilities = re.split(r'[.;•]', b)
+        responsibilities = [r.strip() for r in responsibilities if r.strip() and len(r.strip()) > 8][:6]
 
         results.append({
             "company": company,
@@ -80,7 +89,13 @@ def extract_experience(text: str) -> List[Dict]:
             "duration": duration,
             "responsibilities": responsibilities
         })
+
     if not results:
-        # fallback: return minimal "Not Found"
-        return [{"company": "Not Found", "role": "Not Found", "duration": "Not Found", "responsibilities": []}]
+        # fallback if nothing extracted
+        return [{
+            "company": "Not Found",
+            "role": "Not Found",
+            "duration": "Not Found",
+            "responsibilities": []
+        }]
     return results

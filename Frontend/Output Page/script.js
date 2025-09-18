@@ -192,28 +192,43 @@ if (data.education && data.education.length > 0) {
 }
 
   // ---------------------------
-  // Experience
-  // ---------------------------
-  if (data.experience && data.experience.length > 0) {
-    let content = '';
-    data.experience.forEach(exp => {
-      let expText = '';
-      if (exp.company) expText += ` ${exp.company}`;
-      if (exp.position) expText += `, ${exp.position}`;
-      if (exp.duration) expText += ` (${exp.duration})`;
-      if (exp.description) expText += `: ${exp.description}`;
-      if (typeof exp === 'string') expText = exp;
+// Experience
+// ---------------------------
+if (data.experience && data.experience.length > 0) {
+  let content = '';
+  data.experience.forEach(exp => {
+    content += `<div class="mb-3 p-3 border rounded bg-light">`;
 
-      content += `<div class="mb-3 p-3 border rounded bg-light">
-        ${exp.company ? `<strong><i class="fas fa-building me-2 text-primary"></i>${exp.company}</strong><br>` : ''}
-        ${exp.position ? `<em><i class="fas fa-user-tie me-2"></i>${exp.position}</em><br>` : ''}
-        ${exp.duration ? `<small><i class="fas fa-calendar-alt me-2"></i>${exp.duration}</small><br>` : ''}
-        ${exp.description ? `<p class="mt-2">${exp.description}</p>` : ''}
-        ${typeof exp === 'string' ? `<p>${exp}</p>` : ''}
-      </div>`;
-    });
-    outputAccordion.insertAdjacentHTML('beforeend', createAccordionItem(`Experience${sectionCounter++}`, '<i class="fas fa-briefcase me-2"></i>Work Experience', content));
-  }
+    // Role
+    if (exp.role) content += `<strong><i class="fas fa-user-tie me-2 text-primary"></i>${exp.role}</strong><br>`;
+
+    // Company and Duration
+    let companyDuration = '';
+    if (exp.company) companyDuration += exp.company;
+    if (exp.duration && exp.duration !== "Not Found") companyDuration += ` (${exp.duration})`;
+    if (companyDuration) content += `<em><i class="fas fa-building me-2"></i>${companyDuration}</em><br>`;
+
+    // Responsibilities
+    if (exp.responsibilities && exp.responsibilities.length > 0) {
+      content += `<ul class="mt-2">`;
+      exp.responsibilities.forEach(res => {
+        content += `<li>${res}</li>`;
+      });
+      content += `</ul>`;
+    }
+
+    content += `</div>`;
+  });
+
+  outputAccordion.insertAdjacentHTML(
+    'beforeend',
+    createAccordionItem(
+      `Experience${sectionCounter++}`,
+      '<i class="fas fa-briefcase me-2"></i>Work Experience',
+      content
+    )
+  );
+}
 
   // ---------------------------
   // Skills
