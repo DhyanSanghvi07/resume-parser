@@ -149,16 +149,47 @@ function displayResumeData(data) {
   }
 
   // ---------------------------
-  // Education
-  // ---------------------------
-  if (data.education && data.education.length > 0) {
-    let content = '';
-    data.education.forEach(edu => {
-      const eduText = edu.degree || edu.field || edu.institution || edu;
-      content += `<p><i class="fas fa-graduation-cap me-2 text-success"></i>${eduText}</p>`;
-    });
-    outputAccordion.insertAdjacentHTML('beforeend', createAccordionItem(`Education${sectionCounter++}`, '<i class="fas fa-book me-2"></i>Education', content));
-  }
+// Education
+// ---------------------------
+if (data.education && data.education.length > 0) {
+  let content = '';
+  
+  // Reverse to show latest first
+  [...data.education].reverse().forEach(edu => {
+    content += `
+      <div class="mb-3 p-3 border rounded shadow-sm d-flex justify-content-between align-items-center">
+        <div>
+          ${edu.degree && edu.degree !== 'N/A' ? `
+            <h6 class="fw-bold text-success mb-1">
+              <i class="fas fa-graduation-cap me-2"></i>${edu.degree}
+            </h6>` : ''}
+
+          ${edu.university && edu.university !== 'N/A' ? `
+            <p class="mb-0"><i class="fas fa-university me-2 text-primary"></i>${edu.university}</p>` : ''}
+
+          ${edu.grade && edu.grade !== 'N/A' ? `
+            <p class="mb-0"><i class="fas fa-star me-2 text-info"></i>${edu.grade}</p>` : ''}
+        </div>
+        
+        ${edu.years && edu.years !== 'N/A' ? `
+        <div class="text-end">
+          <span class="badge bg-light text-dark border">
+            <i class="fas fa-calendar-alt me-1 text-warning"></i>${edu.years}
+          </span>
+        </div>` : ''}
+      </div>
+    `;
+  });
+
+  outputAccordion.insertAdjacentHTML(
+    'beforeend',
+    createAccordionItem(
+      `Education${sectionCounter++}`,
+      '<i class="fas fa-book me-2"></i>Education',
+      content
+    )
+  );
+}
 
   // ---------------------------
   // Experience
