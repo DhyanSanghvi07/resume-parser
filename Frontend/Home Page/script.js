@@ -1,9 +1,7 @@
-// Theme toggle logic
 const toggleBtn = document.getElementById('theme-toggle');
 const icon = toggleBtn.querySelector('i');
 const body = document.body;
 
-// Constants
 const DUMMY_PDF_URL = 'https://msnlabs.com/img/resume-sample.pdf';
 
 if (localStorage.getItem('theme') === 'dark') {
@@ -21,14 +19,12 @@ toggleBtn.addEventListener('click', () => {
   localStorage.setItem('theme', isDark ? 'dark' : 'light');
 });
 
-// Resume preview logic
 const fileInput = document.getElementById('resume-file'); // unified ID
 const previewFrame = document.getElementById('previewFrame');
 const fileNameDisplay = document.getElementById('file-name-display');
 const loadingOverlay = document.getElementById('loading-overlay');
 const clearFileBtn = document.getElementById('clear-file-btn');
 
-// Set initial preview source
 previewFrame.src = DUMMY_PDF_URL;
 
 function showLoadingOverlay() {
@@ -40,22 +36,20 @@ function hideLoadingOverlay() {
 }
 
 function clearSelectedFile() {
-  fileInput.value = ''; // Clear the file input
-  previewFrame.src = DUMMY_PDF_URL; // Revert preview to dummy PDF
-  updateFileDisplay(null); // Clear displayed file name
+  fileInput.value = '';
+  previewFrame.src = DUMMY_PDF_URL;
+  updateFileDisplay(null);
   fileInput.classList.remove('is-invalid');
   dropArea.classList.remove('border-danger');
   showToast('File cleared!', 'info', 3000);
 }
 
-// Add event listener for the Clear button
 clearFileBtn.addEventListener('click', clearSelectedFile);
 
 function updateFileDisplay(file) {
   if (file) {
     fileNameDisplay.textContent = `Selected file: ${file.name}`;
     fileNameDisplay.classList.remove('d-none');
-    // Clear any previous error states related to file input
     fileInput.classList.remove('is-invalid');
     dropArea.classList.remove('border-danger');
   } else {
@@ -70,25 +64,23 @@ fileInput.addEventListener('change', () => {
   if (file && (file.type === 'application/pdf' || file.type === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document')) {
     previewFrame.src = URL.createObjectURL(file);
     fileInput.classList.remove('is-invalid');
-    // Enable clear button if file is valid
     clearFileBtn.disabled = false;
   } else {
-    previewFrame.src = DUMMY_PDF_URL; // Fallback to dummy PDF
+    previewFrame.src = DUMMY_PDF_URL;
     showToast('Please upload a valid PDF or DOCX file.', 'danger');
     fileInput.classList.add('is-invalid');
-    updateFileDisplay(null); // Clear file name display for invalid files
-    clearFileBtn.disabled = true; // Disable clear button for invalid file
+    updateFileDisplay(null);
+    clearFileBtn.disabled = true;
   }
 });
 
 const dropArea = document.querySelector('.upload-box');
 
-// Prevent default drag/drop behavior
 ['dragenter', 'dragover'].forEach(eventName => {
   dropArea.addEventListener(eventName, e => {
     e.preventDefault();
     e.stopPropagation();
-    dropArea.classList.add('drag-over'); // Add drag-over class
+    dropArea.classList.add('drag-over');
   });
 });
 
@@ -96,11 +88,10 @@ const dropArea = document.querySelector('.upload-box');
   dropArea.addEventListener(eventName, e => {
     e.preventDefault();
     e.stopPropagation();
-    dropArea.classList.remove('drag-over'); // Remove drag-over class
+    dropArea.classList.remove('drag-over');
   });
 });
 
-// Handle dropped file
 dropArea.addEventListener('drop', e => {
   const files = e.dataTransfer.files;
   if (files.length > 0) {
@@ -108,31 +99,23 @@ dropArea.addEventListener('drop', e => {
     updateFileDisplay(file);
     if (file.type === 'application/pdf' || file.type === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document') {
       previewFrame.src = URL.createObjectURL(file);
-      fileInput.files = files; // sync to input
+      fileInput.files = files;
       dropArea.classList.remove('border-danger');
-      clearFileBtn.disabled = false; // Enable clear button
+      clearFileBtn.disabled = false;
     } else {
-      previewFrame.src = DUMMY_PDF_URL; // Fallback to dummy PDF
+      previewFrame.src = DUMMY_PDF_URL;
       showToast('Please upload a valid PDF or DOCX file.', 'danger');
       dropArea.classList.add('border-danger');
-      updateFileDisplay(null); // Clear file name display for invalid files
-      clearFileBtn.disabled = true; // Disable clear button
+      updateFileDisplay(null);
+      clearFileBtn.disabled = true;
     }
   }
 });
 
-// Initial state: disable clear button if no file selected
-// Assuming fileInput might be empty on load, so we initialize clear button state
 if (!fileInput.files[0]) {
   clearFileBtn.disabled = true;
 }
 
-// Error message handling functions (replaced by toasts)
-// const errorMessageDiv = document.getElementById('error-message');
-// function displayErrorMessage(message) { /* ... */ }
-// function clearErrorMessage() { /* ... */ }
-
-// Toast notification function
 function showToast(message, type = 'info', delay = 5000) {
   const toastContainer = document.querySelector('.toast-container');
   const toastId = `toast-${Date.now()}`;
@@ -153,24 +136,20 @@ function showToast(message, type = 'info', delay = 5000) {
   const toast = new bootstrap.Toast(toastEl, { delay: delay });
   toast.show();
 
-  // Remove toast from DOM after it's hidden
   toastEl.addEventListener('hidden.bs.toast', () => {
     toastEl.remove();
   });
 }
 
-// Upload to backend
 async function uploadResume(file) {
   const uploadBtn = document.getElementById("upload-btn");
   const originalText = uploadBtn.innerHTML;
   
-  showLoadingOverlay(); // Show loading overlay
+  showLoadingOverlay(); 
 
-  // Show loading state
   uploadBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
   uploadBtn.disabled = true;
-  clearFileBtn.disabled = true; // Disable clear button during upload
-  // clearErrorMessage(); // No longer needed, toasts handle visibility
+  clearFileBtn.disabled = true; 
 
   try {
     const formData = new FormData();
@@ -186,22 +165,19 @@ async function uploadResume(file) {
       throw new Error(err.error || response.statusText);
     }
 
-    // Success - redirect to output page
     window.location.href = "/Output Page/index.html";
     
   } catch (error) {
     console.error('Upload error:', error);
     showToast("Error uploading resume: " + error.message, 'danger');
     
-    // Reset button state
     uploadBtn.innerHTML = originalText;
     uploadBtn.disabled = false;
-    // Re-enable clear button if upload failed (and file still selected)
     if (fileInput.files.length > 0) {
       clearFileBtn.disabled = false;
     }
   } finally {
-    hideLoadingOverlay(); // Always hide overlay, regardless of success or failure
+    hideLoadingOverlay();
   }
 }
 
@@ -210,7 +186,6 @@ document.getElementById("upload-btn").addEventListener("click", () => {
     showToast("Please select a file first.", 'warning');
     fileInput.classList.add('is-invalid');
     dropArea.classList.add('border-danger');
-    // clearFileBtn.disabled = true; // Already handled by initial state
     return;
   }
   uploadResume(fileInput.files[0]);
