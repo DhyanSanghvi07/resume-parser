@@ -110,7 +110,7 @@ def save_json_for_web(parsed_data: Dict[str, Any], file_path: str) -> None:
     with open(file_path, "w", encoding="utf-8") as f:
         json.dump(clean_data, f, ensure_ascii=False, indent=4)
 
-    print(f"💾 JSON saved for web: {file_path}")
+    print(f"JSON saved for web: {file_path}")
 
 def save_to_pdf(parsed_data: Dict[str, Any], file_path: str) -> None:
     """Saves parsed data as a neatly formatted PDF file."""

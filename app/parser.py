@@ -23,6 +23,7 @@ def parse_resume(path_or_text: str) -> Dict[str, Any]:
         text = extract_text(path_or_text)
     else:
         text = path_or_text
+    print(text)
 
     # basic cleaning
     text = (text or "").strip()
