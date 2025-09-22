@@ -1,59 +1,53 @@
 {
     "personal_info": {
-        "name": "Aarav Jain",
-        "email": "aarav.jain.green@gmail.com",
+        "name": "Aditi Rao",
+        "email": "aditirao.ai@gmail.com",
         "phone": "N/A",
-        "social_links": {
-            "LinkedIn": "https://linkedin.com/in/aaravjain-sustainability"
-        }
+        "social_links": {}
     },
     "education": [
         {
-            "degree": "MBA",
-            "university": "Marketing & Strategy - Symbiosis Institute",
-            "years": "2019",
+            "degree": "M.Tech",
+            "university": "M.Tech - Computer Science Blockchain Specialization IIIT Hyderabad",
+            "years": "2017",
             "grade": "N/A"
         },
         {
-            "degree": "B.Com",
-            "university": "Business & Marketing - Fergusson College",
-            "years": "2016",
+            "degree": "B.Tech",
+            "university": "B.Tech - Information Technology VIT University",
+            "years": "2013",
             "grade": "N/A"
         }
     ],
     "experience": [
         {
-            "company": "TechNova Solutions Pvt. Ltd.",
-            "role": "ENGINEER",
+            "company": "FinChain Solutions",
+            "role": "Developer",
             "duration": "Not Found",
             "responsibilities": [
-                "SOFTWARE ENGINEER at TechNova Solutions Pvt",
-                ", Pune Aug 2020 Present Developed and maintained scalable web applications using Java Spring Boot and React",
-                "Reduced system downtime by 30% by optimizing database queries and API calls",
-                "Implemented CI/CD pipelines using Jenkins and GitHub Actions",
-                "Collaborated in Agile sprints with a team of 10 engineers, delivering projects on time"
+                "Developer FinChain Solutions, Hyderabad Feb 2021 Present Designed and deployed 30+ smart contracts on Ethereum and Polygon networks",
+                "Developed a decentralized finance (DeFi) platform handling $2M+ in transactions",
+                "Skills Prompt Engineering & Optimization Generative AI (ChatGPT, GPT-4, Claude, LLaMA, Gemini) Python & API Integration NLP & Machine Learning Basics User Experience (UX) Research & Design Thinking"
             ]
         }
     ],
     "skills": [
-        "Docker containerization",
-        "aws",
-        "docker",
-        "git",
-        "java",
-        "jenkins",
+        "Constructivist learning design",
+        "Machine safety design",
+        "Process design",
+        "Process engineering",
+        "Process optimization",
+        "Ratio analysis",
+        "Robotics integration",
+        "critical thinking",
+        "legal research",
+        "machine learning",
         "python",
-        "react native"
+        "responsive design",
+        "scikit-learn",
+        "search engine optimization",
+        "user research"
     ],
-    "certifications": [
-        "Certified Python Developer (Python Institute)",
-        "AWS Certified Solutions Architect"
-    ],
-    "awards": [
-        "Best Innovator Award - NextGen Labs (2016)",
-        "Employee of the Month - TechWorks Solutions (2020)",
-        "Certifications",
-        "Certified Python Developer (Python Institute)",
-        "AWS Certified Solutions Architect"
-    ]
+    "certifications": [],
+    "awards": []
 }

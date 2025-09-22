@@ -4,6 +4,7 @@ const body = document.body;
 
 const DUMMY_PDF_URL = 'https://msnlabs.com/img/resume-sample.pdf';
 
+// Load saved theme
 if (localStorage.getItem('theme') === 'dark') {
   body.classList.add('dark-mode');
   body.classList.remove('light-mode');
@@ -11,6 +12,7 @@ if (localStorage.getItem('theme') === 'dark') {
   icon.classList.add('fa-sun');
 }
 
+// Theme toggle
 toggleBtn.addEventListener('click', () => {
   const isDark = body.classList.toggle('dark-mode');
   body.classList.toggle('light-mode');
@@ -19,25 +21,25 @@ toggleBtn.addEventListener('click', () => {
   localStorage.setItem('theme', isDark ? 'dark' : 'light');
 });
 
-const fileInput = document.getElementById('resume-file'); // unified ID
+// Elements
+const fileInput = document.getElementById('resume-file');
 const previewFrame = document.getElementById('previewFrame');
 const fileNameDisplay = document.getElementById('file-name-display');
 const loadingOverlay = document.getElementById('loading-overlay');
 const clearFileBtn = document.getElementById('clear-file-btn');
+const dropArea = document.querySelector('.upload-box');
 
 previewFrame.src = DUMMY_PDF_URL;
 
-function showLoadingOverlay() {
-  loadingOverlay.classList.remove('d-none');
-}
+// Loading overlay
+function showLoadingOverlay() { loadingOverlay.classList.remove('d-none'); }
+function hideLoadingOverlay() { loadingOverlay.classList.add('d-none'); }
 
-function hideLoadingOverlay() {
-  loadingOverlay.classList.add('d-none');
-}
-
+// Clear file
 function clearSelectedFile() {
   fileInput.value = '';
   previewFrame.src = DUMMY_PDF_URL;
+  previewFrame.style.display = 'block';
   updateFileDisplay(null);
   fileInput.classList.remove('is-invalid');
   dropArea.classList.remove('border-danger');
@@ -46,6 +48,7 @@ function clearSelectedFile() {
 
 clearFileBtn.addEventListener('click', clearSelectedFile);
 
+// Update filename display
 function updateFileDisplay(file) {
   if (file) {
     fileNameDisplay.textContent = `Selected file: ${file.name}`;
@@ -58,15 +61,30 @@ function updateFileDisplay(file) {
   }
 }
 
+// File input change
 fileInput.addEventListener('change', () => {
   const file = fileInput.files[0];
   updateFileDisplay(file);
-  if (file && (file.type === 'application/pdf' || file.type === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document')) {
-    previewFrame.src = URL.createObjectURL(file);
+
+  if (!file) return;
+
+  const validTypes = [
+    'application/pdf',
+    'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+  ];
+
+  if (validTypes.includes(file.type)) {
+    if (file.type === 'application/pdf') {
+      previewFrame.src = URL.createObjectURL(file);
+      previewFrame.style.display = 'block';
+    } else { // DOCX
+      previewFrame.style.display = 'none';
+    }
     fileInput.classList.remove('is-invalid');
     clearFileBtn.disabled = false;
   } else {
     previewFrame.src = DUMMY_PDF_URL;
+    previewFrame.style.display = 'block';
     showToast('Please upload a valid PDF or DOCX file.', 'danger');
     fileInput.classList.add('is-invalid');
     updateFileDisplay(null);
@@ -74,8 +92,7 @@ fileInput.addEventListener('change', () => {
   }
 });
 
-const dropArea = document.querySelector('.upload-box');
-
+// Drag & Drop events
 ['dragenter', 'dragover'].forEach(eventName => {
   dropArea.addEventListener(eventName, e => {
     e.preventDefault();
@@ -94,93 +111,91 @@ const dropArea = document.querySelector('.upload-box');
 
 dropArea.addEventListener('drop', e => {
   const files = e.dataTransfer.files;
-  if (files.length > 0) {
-    const file = files[0];
-    updateFileDisplay(file);
-    if (file.type === 'application/pdf' || file.type === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document') {
+  if (files.length === 0) return;
+
+  const file = files[0];
+  fileInput.files = files;
+  updateFileDisplay(file);
+
+  const validTypes = [
+    'application/pdf',
+    'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+  ];
+
+  if (validTypes.includes(file.type)) {
+    if (file.type === 'application/pdf') {
       previewFrame.src = URL.createObjectURL(file);
-      fileInput.files = files;
-      dropArea.classList.remove('border-danger');
-      clearFileBtn.disabled = false;
-    } else {
-      previewFrame.src = DUMMY_PDF_URL;
-      showToast('Please upload a valid PDF or DOCX file.', 'danger');
-      dropArea.classList.add('border-danger');
-      updateFileDisplay(null);
-      clearFileBtn.disabled = true;
+      previewFrame.style.display = 'block';
+    } else { // DOCX
+      previewFrame.style.display = 'none';
     }
+    dropArea.classList.remove('border-danger');
+    clearFileBtn.disabled = false;
+  } else {
+    previewFrame.src = DUMMY_PDF_URL;
+    previewFrame.style.display = 'block';
+    showToast('Please upload a valid PDF or DOCX file.', 'danger');
+    dropArea.classList.add('border-danger');
+    updateFileDisplay(null);
+    clearFileBtn.disabled = true;
   }
 });
 
-if (!fileInput.files[0]) {
-  clearFileBtn.disabled = true;
-}
+// Disable clear if no file
+if (!fileInput.files[0]) clearFileBtn.disabled = true;
 
+// Toast function
 function showToast(message, type = 'info', delay = 5000) {
   const toastContainer = document.querySelector('.toast-container');
   const toastId = `toast-${Date.now()}`;
-  
   const toastHtml = `
     <div id="${toastId}" class="toast align-items-center text-white bg-${type} border-0" role="alert" aria-live="assertive" aria-atomic="true">
       <div class="d-flex">
-        <div class="toast-body">
-          ${message}
-        </div>
+        <div class="toast-body">${message}</div>
         <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
       </div>
     </div>
   `;
-  
   toastContainer.insertAdjacentHTML('beforeend', toastHtml);
   const toastEl = document.getElementById(toastId);
   const toast = new bootstrap.Toast(toastEl, { delay: delay });
   toast.show();
-
-  toastEl.addEventListener('hidden.bs.toast', () => {
-    toastEl.remove();
-  });
+  toastEl.addEventListener('hidden.bs.toast', () => toastEl.remove());
 }
 
+// Upload resume
 async function uploadResume(file) {
   const uploadBtn = document.getElementById("upload-btn");
   const originalText = uploadBtn.innerHTML;
-  
-  showLoadingOverlay(); 
 
+  showLoadingOverlay();
   uploadBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
   uploadBtn.disabled = true;
-  clearFileBtn.disabled = true; 
+  clearFileBtn.disabled = true;
 
   try {
     const formData = new FormData();
     formData.append("resume", file);
 
-    const response = await fetch("/parse", {
-      method: "POST",
-      body: formData
-    });
-
+    const response = await fetch("/parse", { method: "POST", body: formData });
     if (!response.ok) {
       const err = await response.json();
       throw new Error(err.error || response.statusText);
     }
 
     window.location.href = "/Output Page/index.html";
-    
   } catch (error) {
     console.error('Upload error:', error);
     showToast("Error uploading resume: " + error.message, 'danger');
-    
     uploadBtn.innerHTML = originalText;
     uploadBtn.disabled = false;
-    if (fileInput.files.length > 0) {
-      clearFileBtn.disabled = false;
-    }
+    if (fileInput.files.length > 0) clearFileBtn.disabled = false;
   } finally {
     hideLoadingOverlay();
   }
 }
 
+// Upload button click
 document.getElementById("upload-btn").addEventListener("click", () => {
   if (fileInput.files.length === 0) {
     showToast("Please select a file first.", 'warning');
@@ -190,4 +205,3 @@ document.getElementById("upload-btn").addEventListener("click", () => {
   }
   uploadResume(fileInput.files[0]);
 });
-
