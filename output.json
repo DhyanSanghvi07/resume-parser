@@ -9,61 +9,51 @@
     },
     "education": [
         {
-            "degree": "M.Sc",
-            "university": "Environmental Science Savitribai Phule Pune University",
-            "years": "2018",
+            "degree": "MBA",
+            "university": "Marketing & Strategy - Symbiosis Institute",
+            "years": "2019",
             "grade": "N/A"
         },
         {
-            "degree": "B.Sc",
-            "university": "Environmental Studies Fergusson College",
-            "years": "2015",
+            "degree": "B.Com",
+            "university": "Business & Marketing - Fergusson College",
+            "years": "2016",
             "grade": "N/A"
         }
     ],
     "experience": [
         {
-            "company": "Sustainability Specialist GreenFuture Consulting",
-            "role": "Analyst",
+            "company": "TechNova Solutions Pvt. Ltd.",
+            "role": "ENGINEER",
             "duration": "Not Found",
             "responsibilities": [
-                "Sustainability Specialist GreenFuture Consulting, Pune Feb 2022 Present Led sustainability audits for 12+ corporate clients, reducing energy consumption by an average of 15%",
-                "Developed carbon-reduction strategies aligned with India s 2070 Net-Zero Target",
-                "Prepared ESG reports compliant with GRI and CDP standards",
-                "Environmental Analyst EcoVision Pvt",
-                ", Pune Jan 2020 Jan 2022 Conducted life-cycle assessments for consumer goods",
-                "Designed waste recycling programs, achieving 40% reduction in landfill disposal"
+                "SOFTWARE ENGINEER at TechNova Solutions Pvt",
+                ", Pune Aug 2020 Present Developed and maintained scalable web applications using Java Spring Boot and React",
+                "Reduced system downtime by 30% by optimizing database queries and API calls",
+                "Implemented CI/CD pipelines using Jenkins and GitHub Actions",
+                "Collaborated in Agile sprints with a team of 10 engineers, delivering projects on time"
             ]
         }
     ],
     "skills": [
-        "Behavioral management systems",
-        "Classroom management",
-        "Financial governance",
-        "Financial reporting",
-        "Financial systems",
-        "Gamification strategies",
-        "data governance",
-        "data management",
-        "legal research",
-        "mobile development",
-        "performance management",
-        "power bi",
-        "project management",
-        "reporting",
-        "risk assessment",
-        "risk management",
-        "social media management",
-        "software development",
-        "stakeholder management",
-        "user research",
-        "vulnerability assessment",
-        "web development"
+        "Docker containerization",
+        "aws",
+        "docker",
+        "git",
+        "java",
+        "jenkins",
+        "python",
+        "react native"
     ],
-    "certifications": [],
+    "certifications": [
+        "Certified Python Developer (Python Institute)",
+        "AWS Certified Solutions Architect"
+    ],
     "awards": [
-        "Awarded Top 30 Under 30 in Sustainability by India GreenTech Forum (2023).",
-        "Published research paper on Circular Economy in Indian Manufacturing in Journal of Sustainable Development",
-        "(2022)."
+        "Best Innovator Award - NextGen Labs (2016)",
+        "Employee of the Month - TechWorks Solutions (2020)",
+        "Certifications",
+        "Certified Python Developer (Python Institute)",
+        "AWS Certified Solutions Architect"
     ]
 }

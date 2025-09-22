@@ -31,9 +31,9 @@ except OSError:
 # Regex Patterns
 # ==========================
 DEGREE_KEYWORDS = [
-    r"\bDiploma\b", r"\bB\.?Tech\b", r"\bM\.?Tech\b", r"\bB\.?E\b", r"\bM\.?E\b",
+    r"\bDiploma\b",r"\bMBA\b", r"\bB\.?Tech\b", r"\bM\.?Tech\b", r"\bB\.?E\b", r"\bM\.?E\b",
     r"\bB\.?Sc\b", r"\bM\.?Sc\b", r"\bB\.?Com\b", r"\bM\.?Com\b", r"\bBachelor\b",
-    r"\bMaster\b", r"\bPh\.?D\b", r"\bHSC\b", r"\bSSC\b", r"\bHigh School\b", r"\bCertificate\b"
+    r"\bMaster\b", r"\bPh\.?D\b", r"\bHSC\b", r"\bSSC\b", r"\bHigh School\b"
 ]
 DEGREE_PATTERN = re.compile("|".join(DEGREE_KEYWORDS), re.IGNORECASE)
 
