@@ -54,6 +54,7 @@ This is a **Resume Parser** web application built using **Flask** (Python backen
 git clone https://github.com/yourusername/resume-parser.git
 cd resume-parser
 pip install -r requirements.txt
+python -m spacy download en_core_web_sm
 ```
 
 ### Run the App
